@@ -13,7 +13,7 @@ const withAuthorization = condition => Component => {
         componentDidMount() {
             this.listener = this.props.firebase.auth.onAuthStateChanged(authUser =>
                 {
-                    authUser.roles = { 'admin': true }
+                    if (authUser) authUser.roles = { 'admin': true }
                     if (!condition(authUser)) {
                         this.props.history.push(ROUTES.SIGN_IN);
                     }
