@@ -5,11 +5,15 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+import { Form, Input, Button, Row, Col } from 'antd';
+
 const SignUpPage = () => (
-    <div>
-        <h1>SignUp</h1>
-        <SignUpForm />
-    </div>
+    <Row type="flex" justify="center">
+        <Col span={8}>
+            <h1 style={{'text-align': 'center'}}>SignUp</h1>
+            <SignUpForm />
+        </Col>
+    </Row>
 );
 
 const INITIAL_STATE = {
@@ -54,6 +58,28 @@ class SignUpFormBase extends Component {
     }
 
     render() {
+        const formItemLayout = {
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 8 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 16 },
+            },
+        };
+        const tailFormItemLayout = {
+            wrapperCol: {
+                xs: {
+                    span: 24,
+                    offset: 0,
+                },
+                sm: {
+                    span: 16,
+                    offset: 8,
+                },
+            },
+        };
         const {
             username,
             email,
@@ -68,38 +94,48 @@ class SignUpFormBase extends Component {
             username === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
-                    name="username"
-                    value={username}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Full Name"
-                />
-                <input
-                    name="email"
-                    value={email}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <input
-                    name="passwordOne"
-                    value={passwordOne}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Password"
-                />
-                <input
-                    name="passwordTwo"
-                    value={passwordTwo}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Confirm Password"
-                />
-                <button disabled={isInvalid} type="submit">Sign Up</button>
+            <Form {...formItemLayout} onSubmit={this.onSubmit}>
+                <Form.Item label="Username">
+                    <Input
+                        name="username"
+                        value={username}
+                        onChange={this.onChange}
+                        type="text"
+                        placeholder="Username"
+                    />
+                </Form.Item>
+                <Form.Item label="Email Address">
+                    <Input
+                        name="email"
+                        value={email}
+                        onChange={this.onChange}
+                        type="text"
+                        placeholder="Email Address"
+                    />
+                </Form.Item>
+                <Form.Item label="Password">
+                    <Input
+                        name="passwordOne"
+                        value={passwordOne}
+                        onChange={this.onChange}
+                        type="password"
+                        placeholder="Password"
+                    />
+                </Form.Item>
+                <Form.Item label="Confirm Password">
+                    <Input
+                        name="passwordTwo"
+                        value={passwordTwo}
+                        onChange={this.onChange}
+                        type="password"
+                        placeholder="Confirm Password"
+                    />
+                </Form.Item>
+                <Form.Item {...tailFormItemLayout}>
+                    <Button disabled={isInvalid} type="primary" htmlType="submit">Sign Up</Button>
+                </Form.Item>
                 {error && <p>{error.message}</p>}
-            </form>
+            </Form>
         )
     }
 }

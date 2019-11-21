@@ -5,10 +5,14 @@ import SignOutButton from '../SignOut'
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
 
+import { Layout, Menu } from 'antd';
+
+const { Header } = Layout;
+
 const Navigation = () => (
     <div>
         <AuthUserContext.Consumer>
-            {authUser => 
+            {authUser =>
                 authUser ? <NavigationAuth /> : <NavigationNonAuth />
             }
         </AuthUserContext.Consumer>
@@ -16,38 +20,52 @@ const Navigation = () => (
 );
 
 const NavigationAuth = () => (
-    <div>
-        <ul>
-            <li>
-                <Link to={ROUTES.LANDING}>Landing</Link>
-            </li>
-            <li>
-                <Link to={ROUTES.HOME}>Home</Link>
-            </li>
-            <li>
-                <Link to={ROUTES.ACCOUNT}>Account</Link>
-            </li>
-            <li>
-                <Link to={ROUTES.ADMIN}>Admin</Link>
-            </li>
-            <li>
-                <SignOutButton />
-            </li>
-        </ul>
-    </div>
+    <AuthUserContext.Consumer>
+        {authUser => <Header className="header">
+            <Menu
+                theme="dark"
+                mode="horizontal"
+                defaultSelectedKeys={['2']}
+                style={{ lineHeight: '64px' }}>
+                <Menu.Item key="1">
+                    <Link to={ROUTES.LANDING}>Landing</Link>
+                </Menu.Item>
+                <Menu.Item key="2">
+                    <Link to={ROUTES.HOME}>Home</Link>
+                </Menu.Item>
+                <Menu.Item key="3">
+                    <Link to={ROUTES.ACCOUNT}>Account</Link>
+                </Menu.Item>
+                <Menu.Item key="4">
+                    <Link to={ROUTES.ADMIN}>Admin</Link>
+                </Menu.Item>
+                <Menu.Item key="5">
+                    {authUser.email}
+                </Menu.Item>
+                <Menu.Item key="6">
+                    <SignOutButton />
+                </Menu.Item>
+            </Menu>
+        </Header>
+        }
+    </AuthUserContext.Consumer>
 );
 
 const NavigationNonAuth = () => (
-    <div>
-        <ul>
-            <li>
+    <Header className="header">
+        <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={['2']}
+            style={{ lineHeight: '64px' }}>
+            <Menu.Item key="1">
                 <Link to={ROUTES.LANDING}>Landing</Link>
-            </li>
-            <li>
+            </Menu.Item>
+            <Menu.Item key="2">
                 <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-            </li>
-        </ul>
-    </div>
+            </Menu.Item>
+        </Menu>
+    </Header>
 );
 
 export default Navigation;

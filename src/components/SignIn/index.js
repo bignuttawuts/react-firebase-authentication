@@ -7,13 +7,19 @@ import { PasswordForgetLink } from '../PasswordForget';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+import { Form, Input, Button, Row, Col } from 'antd';
+
+import './signIn.css';
+
 const SignInPage = () => (
-  <div>
-    <h1>SignIn</h1>
-    <SignInForm />
-    <PasswordForgetLink />
-    <SignUpLink />
-  </div>
+  <Row type="flex" justify="center">
+    <Col span={6}>
+      <h1 style={{'text-align': 'center'}}>Sign in</h1>
+      <SignInForm />
+      <PasswordForgetLink />
+      <SignUpLink />
+    </Col>
+  </Row>
 );
 
 const INITIAL_STATE = {
@@ -54,27 +60,33 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
+
+      <Form onSubmit={this.onSubmit} id="components-form-demo-normal-login" className="login-form">
+        <Form.Item>
+          <Input
+            name="email"
+            value={email}
+            onChange={this.onChange}
+            type="text"
+            placeholder="Email Address"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Input
+            name="password"
+            value={password}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
+        <Button disabled={isInvalid} type="primary" htmlType="submit" className="login-form-button">
+          Sign in
+        </Button>
 
         {error && <p>{error.message}</p>}
-      </form>
+      </Form>
+
     )
   }
 }

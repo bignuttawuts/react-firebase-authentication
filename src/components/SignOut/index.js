@@ -5,9 +5,9 @@ import { withFirebase } from '../Firebase';
 class SignOutButton extends Component {
     render() {
         return (
-            <button type="button" onClick={this.props.firebase.doSignOut}>
+            <span onClick={this.props.firebase.doSignOut}>
                 Sign Out
-            </button>
+            </span>
         )
     }
 }
